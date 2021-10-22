@@ -84,6 +84,12 @@
 - (NSDictionary*)deviceProperties
 {
     UIDevice* device = [UIDevice currentDevice];
+    
+    #if TARGET_OS_MACCATALYST
+    NSString* os = @"Mac";
+    #else
+    NSString* os = @"iOS";
+    #endif
 
     return @{
              @"manufacturer": @"Apple",
@@ -92,7 +98,8 @@
              @"version": [device systemVersion],
              @"uuid": [self uniqueAppInstanceIdentifier:device],
              @"cordova": [[self class] cordovaVersion],
-             @"isVirtual": @([self isVirtual])
+             @"isVirtual": @([self isVirtual]),
+             @"os": os
              };
 }
 
